@@ -36,3 +36,22 @@ fields.go           README.md  yaml.go
 ---------------------------
 
 
+
+kubectl create -f https://github.com/kubernetes-sigs/wg-policy-prototypes/raw/master/policy-report/crd/policy.kubernetes.io_policyreports.yaml
+customresourcedefinition.apiextensions.k8s.io/policyreports.policy.kubernetes.io created
+
+
+kubectl create -f https://github.com/kubernetes-sigs/wg-policy-prototypes/raw/master/policy-report/crd/policy.kubernetes.io_policyreports.yaml
+customresourcedefinition.apiextensions.k8s.io/policyreports.policy.kubernetes.io created
+
+kubectl get policyreports
+
+$ git clone https://github.com/M00nF1sh/gen-crd-api-reference-docs.git
+$ cd gen-crd-api-reference-docs 
+$ go build
+$ mv gen-crd-api-reference-docs /usr/local/bin/
+$ make generate
+
+------------------------------
+
+
