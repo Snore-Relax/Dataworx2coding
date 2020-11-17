@@ -1,0 +1,28 @@
+ntrolplane $
+controlplane $ ls
+go
+controlplane $ cd go
+controlplane $ ls
+bin  pkg
+controlplane $ cd pkg
+controlplane $ git clone https://github.com/M00nF1sh/gen-crd-api-reference-docs.git
+Cloning into 'gen-crd-api-reference-docs'...
+remote: Enumerating objects: 3, done.
+remote: Counting objects: 100% (3/3), done.
+remote: Compressing objects: 100% (3/3), done.
+remote: Total 179 (delta 0), reused 1 (delta 0), pack-reused 176
+Receiving objects: 100% (179/179), 79.69 KiB | 223.00 KiB/s, done.
+Resolving deltas: 100% (91/91), done.
+controlplane $ cd gen-crd-api-reference-docs
+controlplane $ go build
+go: downloading k8s.io/gengo v0.0.0-20190128074634-0689ccc1d7d6
+go: downloading k8s.io/klog v0.2.0
+go: downloading github.com/russross/blackfriday/v2 v2.0.1
+go: downloading github.com/shurcooL/sanitized_anchor_name v1.0.0
+controlplane $ ls
+example-config.json         go.mod  LICENSE  README.md
+gen-crd-api-referen
+
+
+
+
