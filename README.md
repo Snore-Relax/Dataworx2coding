@@ -29,4 +29,8 @@ $ make generate
 
 ------------------------------
 
-
+$ git clone https://github.com/M00nF1sh/gen-crd-api-reference-docs.git
+$ cd gen-crd-api-reference-docs 
+$ go build
+$ mv gen-crd-api-reference-docs /usr/local/bin/
+$ make generate
