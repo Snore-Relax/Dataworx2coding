@@ -13,11 +13,8 @@ Extra Interactive Bash Terminal
 
 
 kubectl create -f https://github.com/kubernetes-sigs/wg-policy-prototypes/raw/master/policy-report/crd/policy.kubernetes.io_policyreports.yaml
-customresourcedefinition.apiextensions.k8s.io/policyreports.policy.kubernetes.io created
 
-
-kubectl create -f https://github.com/kubernetes-sigs/wg-policy-prototypes/raw/master/policy-report/crd/policy.kubernetes.io_policyreports.yaml
-customresourcedefinition.apiextensions.k8s.io/policyreports.policy.kubernetes.io created
+kubectl create -f https://github.com/kubernetes-sigs/wg-policy-prototypes/raw/master/policy-report/samples/sample-cis-k8s.yaml
 
 kubectl get policyreports
 
