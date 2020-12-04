@@ -31,3 +31,16 @@ $ cd gen-crd-api-reference-docs
 $ go build
 $ mv gen-crd-api-reference-docs /usr/local/bin/
 $ make generate
+
+------------------------------
+
+https://github.com/go-yaml/yaml
+
+https://godoc.org/gopkg.in/yaml.v2
+
+https://idratherbewriting.com/learnapidoc/pubapis_yaml.html
+
+https://www.manongdao.com/q-1320226.html
+
+https://gopkg.in/yaml.v3
+
