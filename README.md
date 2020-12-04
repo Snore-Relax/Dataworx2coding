@@ -44,3 +44,5 @@ https://www.manongdao.com/q-1320226.html
 
 https://gopkg.in/yaml.v3
 
+
+https://www.katacoda.com/courses/kubernetes/playground
