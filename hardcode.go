@@ -9,7 +9,8 @@ import (
    "gopkg.in/yaml.v3"
 )
 
-/*
+/*. 
+-> shows the format of the file. 
 var (
     sourceYaml = `version: 1
 type: verbose
@@ -27,26 +28,28 @@ applications:
       builder: test
 `
 )
+
+not sure if we should add to the code
 */
 
 //part of select specific yaml file.
-
+//reads specific information about yaml file. 
 type YamlConfig struct {
-     Hits int64 `yaml:"hits"`
-    Time int64 `yaml:"time"`
+     Hits int `yaml:"hits"`
+    Time int `yaml:"time"`
     
 }
 
-//program to modify the code.
-
+//program to "modify" the code.
+//follows the structure seen in var. But can have different data populating the fields.
 type Policy struct {
-    Version int64 `yaml:"version,omitempty" json:"version,omitempty"`
+    Version int `yaml:"version,omitempty" json:"version,omitempty"`
     Control string `yaml:"control,omitempty" json:"control,omitempty"`
-    Id int64 `yaml:"id,omitempty" json:"id,omitempty"`
+    Id int `yaml:"id,omitempty" json:"id,omitempty"`
     Text string `yaml:"text,omitempty" json:"text,omitempty"`
     Checks string `yaml:"checks,omitempty" json:"checks,omitempty"`
     Group struct{
-    	 Id int64 `yaml:"id,omitempty" json:"id,omitempty"`
+    	 Id int `yaml:"id,omitempty" json:"id,omitempty"`
 	 Text string `yaml:"text,omitempty" json:"text,omitempty"`
     } `yaml:"group,omitempty" json:"group,omitempty"`
 
