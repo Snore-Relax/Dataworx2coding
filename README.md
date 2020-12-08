@@ -7,6 +7,7 @@ This is our work to create the adapter.
 fields: 
 Extra Interactive Bash Terminal
 
+go get gopkg.in/yaml.v3
 
 ---------------------------
 
