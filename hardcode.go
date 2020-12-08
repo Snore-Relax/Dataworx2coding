@@ -9,22 +9,26 @@ import (
    "gopkg.in/yaml.v3"
 )
 
-
 //-> shows the format of the file. 
 var (
-ReportFormat = `version: 1.6
+  PolicyReport = `version: 1.6
 type: verbose
 kind : bfr
 
-#  KubernetesPolicy
-  - name: app1
-    kind: nodejs
-    path: app1
-    exec:
-      platforms: k8s
-      builder: test
+# my list of applications
+applications:
+
+#  Kubernetes app
+  - control: app1
+    id: nodejs
+    text: app1
+    check: app3
+      group:
+        idsub: k8s
+        textsub: test
 `
 )
+
 
 //not sure if we should add to the code
 
@@ -40,14 +44,13 @@ type YamlConfig struct {
 //program to "modify" the code.
 //follows the structure seen in var. But can have different data populating the fields.
 type Policy struct {
-    Version int `yaml:"version,omitempty" json:"version,omitempty"`
     Control string `yaml:"control,omitempty" json:"control,omitempty"`
-    Id int `yaml:"id,omitempty" json:"id,omitempty"`
+    Id string `yaml:"id,omitempty" json:"id,omitempty"`
     Text string `yaml:"text,omitempty" json:"text,omitempty"`
     Checks string `yaml:"checks,omitempty" json:"checks,omitempty"`
     Group struct{
-    	 Idsub int `yaml:"id,omitempty" json:"id,omitempty"`
-	 Textsub string `yaml:"text,omitempty" json:"text,omitempty"`
+    	 Idsub string `yaml:"idsub,omitempty" json:"idsub,omitempty"`
+	 Textsub string `yaml:"textsub,omitempty" json:"textsub,omitempty"`
     } `yaml:"group,omitempty" json:"group,omitempty"`
 
     /*
@@ -59,23 +62,21 @@ type Policy struct {
 }
 
 func newApplicationNode(
-    version int,
     control string,
-    id int,
+    id string,
     text string, 
     checks string,
-    idsub int, 
+    idsub string, 
     textsub string,
     comment string) (*yaml.Node, error) {
 
-    app := PolicyReport{
-	Version: version,
+    app := Policy{
         Control: control,
         Id: id,
 	Text: text,
 	Checks: checks, 
 	Group: struct{
-    	    Idsub int `yaml:"id,omitempty" json:"id,omitempty"`
+    	    Idsub string `yaml:"id,omitempty" json:"id,omitempty"`
 	    Textsub string `yaml:"text,omitempty" json:"text,omitempty"`
 	} {idsub, textsub},
     }
@@ -99,13 +100,13 @@ func main() {
 //modify yaml file
  yamlNode := yaml.Node{}
 
-    err := yaml.Unmarshal([]byte(sourceYaml), &yamlNode)
+    err := yaml.Unmarshal([]byte(PolicyReport), &yamlNode)
     if err != nil {
         log.Fatalf("error: %v", err)
     }
 
-    newApp, err := newApplicationNode(1.6, ":", 5, "Kubernetes Policies",
-        ":", 5.1, "Service")
+    newApp, err := newApplicationNode(":", "5", "Kubernetes Policies",
+        ":", "5.1", "Service")
     if err != nil {
         log.Fatalf("error: %v", err)
     }
