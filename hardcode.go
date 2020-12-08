@@ -46,8 +46,8 @@ type Policy struct {
     Text string `yaml:"text,omitempty" json:"text,omitempty"`
     Checks string `yaml:"checks,omitempty" json:"checks,omitempty"`
     Group struct{
-    	 Id int `yaml:"id,omitempty" json:"id,omitempty"`
-	 Text string `yaml:"text,omitempty" json:"text,omitempty"`
+    	 Idsub int `yaml:"id,omitempty" json:"id,omitempty"`
+	 Textsub string `yaml:"text,omitempty" json:"text,omitempty"`
     } `yaml:"group,omitempty" json:"group,omitempty"`
 
     /*
@@ -64,18 +64,20 @@ func newApplicationNode(
     id int,
     text string, 
     checks string,
+    idsub int, 
+    textsub string,
     comment string) (*yaml.Node, error) {
 
-    app := Policy Report{
+    app := PolicyReport{
 	Version: version,
         Control: control,
         Id: id,
 	Text: text,
 	Checks: checks, 
 	Group: struct{
-    	    Id int `yaml:"id,omitempty" json:"id,omitempty"`
-	    Text string `yaml:"text,omitempty" json:"text,omitempty"`
-	} {id, text},
+    	    Idsub int `yaml:"id,omitempty" json:"id,omitempty"`
+	    Textsub string `yaml:"text,omitempty" json:"text,omitempty"`
+	} {idsub, textsub},
     }
     marshalledApp, err := yaml.Marshal(&app)
     if err != nil {
@@ -102,8 +104,8 @@ func main() {
         log.Fatalf("error: %v", err)
     }
 
-    newApp, err := newApplicationNode("app2", "golang", "app2", "dockerh",
-        "test", "Second app")
+    newApp, err := newApplicationNode(1.6, ":", 5, "Kubernetes Policies",
+        ":", 5.1, "Service")
     if err != nil {
         log.Fatalf("error: %v", err)
     }
