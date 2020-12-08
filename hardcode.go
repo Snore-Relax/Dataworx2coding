@@ -9,15 +9,12 @@ import (
    "gopkg.in/yaml.v3"
 )
 
-/*. 
--> shows the format of the file. 
+
+//-> shows the format of the file. 
 var (
-    sourceYaml = `version: 1
+ReportFormat = `version: 1.6
 type: verbose
 kind : bfr
-
-# my list of applications
-applications:
 
 #  KubernetesPolicy
   - name: app1
@@ -29,8 +26,8 @@ applications:
 `
 )
 
-not sure if we should add to the code
-*/
+//not sure if we should add to the code
+
 
 //part of select specific yaml file.
 //reads specific information about yaml file. 
@@ -62,19 +59,23 @@ type Policy struct {
 }
 
 func newApplicationNode(
-    version int64,
+    version int,
     control string,
-    id int64,
+    id int,
+    text string, 
+    checks string,
     comment string) (*yaml.Node, error) {
 
-    app := Application{
-        Name: name,
-        Kind: kind,
-        Path: path,
-        Exec: struct {
-            Platforms string `yaml:"platforms,omitempty" json:"platforms,omitempty"`
-            Builder   string `yaml:"builder,omitempty" json:"builder,omitempty"`
-        }{platforms, builder},
+    app := Policy Report{
+	Version: version,
+        Control: control,
+        Id: id,
+	Text: text,
+	Checks: checks, 
+	Group: struct{
+    	    Id int `yaml:"id,omitempty" json:"id,omitempty"`
+	    Text string `yaml:"text,omitempty" json:"text,omitempty"`
+	} {id, text}
     }
     marshalledApp, err := yaml.Marshal(&app)
     if err != nil {
