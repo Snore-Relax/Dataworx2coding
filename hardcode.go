@@ -75,7 +75,7 @@ func newApplicationNode(
 	Group: struct{
     	    Id int `yaml:"id,omitempty" json:"id,omitempty"`
 	    Text string `yaml:"text,omitempty" json:"text,omitempty"`
-	} {id, text}
+	} {id, text},
     }
     marshalledApp, err := yaml.Marshal(&app)
     if err != nil {
