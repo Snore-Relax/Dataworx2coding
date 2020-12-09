@@ -10,6 +10,7 @@ import (
 )
 
 //-> shows the format of the file. 
+/*
 var (
   sourceYaml = `version: 1.6
 type: verbose
@@ -28,11 +29,7 @@ applications:
         textsub: test
 `
 )
-
-
-//not sure if we should add to the code
-
-
+*/
 //part of select specific yaml file.
 //reads specific information about yaml file. 
 type YamlConfig struct {
@@ -49,8 +46,8 @@ type Policy struct {
     Text string `yaml:"text,omitempty" json:"text,omitempty"`
     Checks string `yaml:"checks,omitempty" json:"checks,omitempty"`
     Group struct{
-    	 Idsub string `yaml:"idsub,omitempty" json:"idsub,omitempty"`
-	 Textsub string `yaml:"textsub,omitempty" json:"textsub,omitempty"`
+    	 Id string `yaml:"id,omitempty" json:"id,omitempty"`
+	 Text string `yaml:"text,omitempty" json:"text,omitempty"`
     } `yaml:"group,omitempty" json:"group,omitempty"`
 
     /*
@@ -61,13 +58,11 @@ type Policy struct {
     */
 }
 
-func newApplicationNode(
+func newApplicationNode(	
     control string,
     id string,
     text string, 
     checks string,
-    idsub string, 
-    textsub string,
     comment string) (*yaml.Node, error) {
 
     app := Policy{
@@ -76,9 +71,9 @@ func newApplicationNode(
 	Text: text,
 	Checks: checks, 
 	Group: struct{
-    	    Idsub string `yaml:"idsub,omitempty" json:"idsub,omitempty"`
-	    Textsub string `yaml:"textsub,omitempty" json:"textsub,omitempty"`
-	} {idsub, textsub},
+    	    Id string `yaml:"id,omitempty" json:"id,omitempty"`
+	    Text string `yaml:"text,omitempty" json:"text,omitempty"`
+	} {id, text},
     }
     marshalledApp, err := yaml.Marshal(&app)
     if err != nil {
@@ -93,20 +88,37 @@ func newApplicationNode(
     return &node, nil
 }
 
+var (
+    sourceYaml = `version: 1
+type: verbose
+kind : bfr
+
+# my list of applications
+applications:
+
+#  First app
+  - name: app1
+    kind: nodejs
+    path: app1
+    exec:
+      platforms: k8s
+      builder: test
+`
+)
 
 
 func main() {
 
 //modify yaml file
  yamlNode := yaml.Node{}
-
+	
     err := yaml.Unmarshal([]byte(sourceYaml), &yamlNode)
     if err != nil {
         log.Fatalf("error: %v", err)
     }
 
-    newApp, err := newApplicationNode("test", ":", "5", "Kubernetes Policies",
-        ":", "5.1", "Service")
+    newApp, err := newApplicationNode("test", "5", "Kubernetes Policies",
+         "5.1", "Service")
     if err != nil {
         log.Fatalf("error: %v", err)
     }
