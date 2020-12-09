@@ -11,7 +11,7 @@ import (
 
 //-> shows the format of the file. 
 var (
-  PolicyReport = `version: 1.6
+  sourceYaml = `version: 1.6
 type: verbose
 kind : bfr
 
@@ -76,8 +76,8 @@ func newApplicationNode(
 	Text: text,
 	Checks: checks, 
 	Group: struct{
-    	    Idsub string `yaml:"id,omitempty" json:"id,omitempty"`
-	    Textsub string `yaml:"text,omitempty" json:"text,omitempty"`
+    	    Idsub string `yaml:"idsub,omitempty" json:"idsub,omitempty"`
+	    Textsub string `yaml:"textsub,omitempty" json:"textsub,omitempty"`
 	} {idsub, textsub},
     }
     marshalledApp, err := yaml.Marshal(&app)
@@ -100,12 +100,12 @@ func main() {
 //modify yaml file
  yamlNode := yaml.Node{}
 
-    err := yaml.Unmarshal([]byte(PolicyReport), &yamlNode)
+    err := yaml.Unmarshal([]byte(sourceYaml), &yamlNode)
     if err != nil {
         log.Fatalf("error: %v", err)
     }
 
-    newApp, err := newApplicationNode(":", "5", "Kubernetes Policies",
+    newApp, err := newApplicationNode("test", ":", "5", "Kubernetes Policies",
         ":", "5.1", "Service")
     if err != nil {
         log.Fatalf("error: %v", err)
