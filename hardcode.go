@@ -28,13 +28,6 @@ type Policy struct {
     	 Id string `yaml:"id,omitempty" json:"id,omitempty"`
 	 Text string `yaml:"text,omitempty" json:"text,omitempty"`
     } `yaml:"group,omitempty" json:"group,omitempty"`
-
-    /*
-    Exec struct {
-        Platforms string `yaml:"platforms,omitempty" json:"platforms,omitempty"`
-        Builder   string `yaml:"builder,omitempty" json:"builder,omitempty"`
-    } `yaml:"exec,omitempty" json:"exec,omitempty"`
-    */
 }
 
 func newApplicationNode(	
