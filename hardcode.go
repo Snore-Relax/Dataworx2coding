@@ -20,17 +20,17 @@ type YamlConfig struct {
 //program to "modify" the code.
 //follows the structure seen in var. But can have different data populating the fields.
 type Policy struct {
-    Control string `yaml:"control,omitempty" json:"control,omitempty"`
-    Id string `yaml:"id,omitempty" json:"id,omitempty"`
-    Text string `yaml:"text,omitempty" json:"text,omitempty"`
-    Checks string `yaml:"checks,omitempty" json:"checks,omitempty"`
+    Control string `yaml:"control,omitempty"` 
+    Id string `yaml:"id,omitempty"`
+    Text string `yaml:"text,omitempty"`
+    Checks string `yaml:"checks,omitempty"` 
     Group struct{
-    	 Id string `yaml:"id,omitempty" json:"id,omitempty"`
-	 Text string `yaml:"text,omitempty" json:"text,omitempty"`
-    } `yaml:"group,omitempty" json:"group,omitempty"`
+    	 Id string `yaml:"id,omitempty"` 
+	 Text string `yaml:"text,omitempty"` 
+    } `yaml:"group,omitempty"
 }
 
-func newApplicationNode(	
+func prcrdFields(	
     control string,
     id string,
     text string, 
@@ -43,8 +43,8 @@ func newApplicationNode(
 	Text: text,
 	Checks: checks, 
 	Group: struct{
-    	    Id string `yaml:"id,omitempty" json:"id,omitempty"`
-	    Text string `yaml:"text,omitempty" json:"text,omitempty"`
+    	    Id string `yaml:"id,omitempty"`
+	    Text string `yaml:"text,omitempty"` 
 	} {id, text},
     }
     marshalledApp, err := yaml.Marshal(&app)
@@ -60,14 +60,11 @@ func newApplicationNode(
     return &node, nil
 }
 
-var (
-    sourceYaml = `version: 1
-type: verbose
-kind : bfr
-
-# my list of applications
-applications:
-
+var prcrd = `
+	apiVersion: policy.kubernetes.io/v1alpha1
+	kind: PolicyReport
+	metadata:
+	
 #  First app
   - name: app1
     kind: nodejs
