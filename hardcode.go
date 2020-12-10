@@ -9,27 +9,6 @@ import (
    "gopkg.in/yaml.v3"
 )
 
-//-> shows the format of the file. 
-/*
-var (
-  sourceYaml = `version: 1.6
-type: verbose
-kind : bfr
-
-# my list of applications
-applications:
-
-#  Kubernetes app
-  - control: app1
-    id: nodejs
-    text: app1
-    check: app3
-      group:
-        idsub: k8s
-        textsub: test
-`
-)
-*/
 //part of select specific yaml file.
 //reads specific information about yaml file. 
 type YamlConfig struct {
