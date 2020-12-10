@@ -17,35 +17,62 @@ type YamlConfig struct {
     
 }
 
+var prcrd = `
+	apiVersion: policy.kubernetes.io/v1alpha1
+	kind: PolicyReport
+	metadata:
+`
+
 //program to "modify" the code.
 //follows the structure seen in var. But can have different data populating the fields.
 type Policy struct {
-    Control string `yaml:"control,omitempty"` 
-    Id string `yaml:"id,omitempty"`
-    Text string `yaml:"text,omitempty"`
-    Checks string `yaml:"checks,omitempty"` 
-    Group struct{
-    	 Id string `yaml:"id,omitempty"` 
-	 Text string `yaml:"text,omitempty"` 
-    } `yaml:"group,omitempty"
+    Name string `yaml:"name,omitempty"` 
+    Labels string `yaml:"labels,omitempty"`
+	Annotations struct{
+		A_name string `yaml:"a_name,omitempty"`
+		Category string `yaml:"category,omitempty"`
+		P_version string `yaml:"p_version,omitempty"`
+	} `yaml:"annotations,omitempty"`
+	Summary struct{
+		Pass int `yaml:"pass,omitempty"`
+		Fail int `yaml:"fail,omitempty"`
+		Warn int `yaml:"warn,omitempty"`
+		Info int `yaml:"info,omitempty"`
+		Error int `yaml:"eror,omitempty"`
+		Skip int `yaml:"skip,omitempty"`
+	} `yaml:"summary,omitempty"`	
 }
 
 func prcrdFields(	
-    control string,
-    id string,
-    text string, 
-    checks string,
-    comment string) (*yaml.Node, error) {
+    name string,
+    labels string,
+    a_name string, 
+    category string,
+    p_version string, 
+    pass int,
+    fail int,
+    warn int,
+    info int,
+    eror int,
+    skip int
+    ) (*yaml.Node, error) {
 
     app := Policy{
-        Control: control,
-        Id: id,
-	Text: text,
-	Checks: checks, 
-	Group: struct{
-    	    Id string `yaml:"id,omitempty"`
-	    Text string `yaml:"text,omitempty"` 
-	} {id, text},
+        Name: name,
+        Labels: labels,
+	Annotation: struct {
+	     A_name string `yaml:"a_name,omitempty"`
+	     Category string `yaml:"category,omitempty"`
+	     P_version string `yaml:"p_version,omitempty"`    
+	}{a_name, category, p_version}, 
+	Summary struct{
+	     Pass int `yaml:"pass,omitempty"`
+	     Fail int `yaml:"fail,omitempty"`
+	     Warn int `yaml:"warn,omitempty"`
+	     Info int `yaml:"info,omitempty"`
+	     Error int `yaml:"eror,omitempty"`
+	     Skip int `yaml:"skip,omitempty"`
+       }{pass, fail, warn, info, eror, skip},
     }
     marshalledApp, err := yaml.Marshal(&app)
     if err != nil {
@@ -60,24 +87,11 @@ func prcrdFields(
     return &node, nil
 }
 
-var prcrd = `
-	apiVersion: policy.kubernetes.io/v1alpha1
-	kind: PolicyReport
-	metadata:
-	
-#  First app
-  - name: app1
-    kind: nodejs
-    path: app1
-    exec:
-      platforms: k8s
-      builder: test
-`
-)
 
 
 func main() {
-
+ a := 5
+	
 //modify yaml file
  yamlNode := yaml.Node{}
 	
@@ -86,7 +100,7 @@ func main() {
         log.Fatalf("error: %v", err)
     }
 
-    newApp, err := newApplicationNode("test", "5", "Kubernetes Policies",
+    newApp, err := newApplicationNode("test", a, "Kubernetes Policies",
          "5.1", "Service")
     if err != nil {
         log.Fatalf("error: %v", err)
