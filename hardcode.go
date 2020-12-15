@@ -2,20 +2,14 @@ package main
 
 import (
     "fmt"
+    "bufio"
     "flag"
+    "os"
     "io/ioutil"
     "log"
     
    "gopkg.in/yaml.v3"
 )
-
-//part of select specific yaml file.
-//reads specific information about yaml file. 
-type YamlConfig struct {
-     Hits int `yaml:"hits"`
-    Time int `yaml:"time"`
-    
-}
 
 var prcrd = `
 	apiVersion: policy.kubernetes.io/v1alpha1
@@ -88,10 +82,35 @@ func prcrdFields(
 }
 
 
+func scan(){
+	
+//Select specific yaml file
+    fmt.Println("Reading YAML file.....")
+	
+    var fileName string
+    fileHandle, _:=os.Open(&fileName, "f", "", "YAML file to parse.")
+    if _ != nil {
+        log.Fatal(err)
+    }
+    defer fileHandle.Close()
+
+    if fileName == "" {
+        fmt.Println("Please provide yaml file by using -f option")
+        return
+    }
+
+    scanner := bufio.NewScanner(file)
+    for scanner.Scan() {
+        fmt.Println(scanner.Text())
+    }
+
+    if err := scanner.Err(); err != nil {
+        log.Fatal(err)
+    }
+
+}
 
 func main() {
- a := 5
-	
 //modify yaml file
  yamlNode := yaml.Node{}
 	
@@ -122,33 +141,5 @@ yamlNode.Content[0].Content[appIdx].Content = append(
         log.Fatal(err)
     }
     fmt.Println(string(out))
-    
 
-//----------------
-
-//Select specific yaml file
-    fmt.Println("Parsing YAML file")
-
-    var fileName string
-    flag.StringVar(&fileName, "f", "", "YAML file to parse.")
-    flag.Parse()
-
-    if fileName == "" {
-        fmt.Println("Please provide yaml file by using -f option")
-        return
-    }
-
-    yamlFile, err := ioutil.ReadFile(fileName)
-    if err != nil {
-        fmt.Printf("Error reading YAML file: %s\n", err)
-        return
-    }
-
-    var yamlConfig YamlConfig
-    err = yaml.Unmarshal(yamlFile, &yamlConfig)
-    if err != nil {
-        fmt.Printf("Error parsing YAML file: %s\n", err)
-    }
-
-    fmt.Printf("Result: %v\n", yamlConfig)
 }
