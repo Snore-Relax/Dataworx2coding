@@ -1,0 +1,48 @@
+controlplane $ ./test5
+version: 1
+type: verbose
+kind: bfr
+# my list of applications
+applications:
+    #  First app
+    - name: app1
+      kind: nodejs
+      path: app1
+      exec:
+        platforms: k8s
+        builder: test
+    # Service
+    - control: test
+      id: "5"
+      text: Kubernetes Policies
+      checks: "5.1"
+      group:
+        id: "5"
+        text: Kubernetes Policies
+
+Parsing YAML file
+Please provide yaml file by using -f option
+controlplane $ ./test5 -f policies.yaml
+version: 1
+type: verbose
+kind: bfr
+# my list of applications
+applications:
+    #  First app
+    - name: app1
+      kind: nodejs
+      path: app1
+      exec:
+        platforms: k8s
+        builder: test
+    # Service
+    - control: test
+      id: "5"
+      text: Kubernetes Policies
+      checks: "5.1"
+      group:
+        id: "5"
+        text: Kubernetes Policies
+
+Parsing YAML file
+Result: {0 0}
