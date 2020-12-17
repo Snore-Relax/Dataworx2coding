@@ -82,34 +82,6 @@ func prcrdFields(
 }
 
 
-func scan(){
-	
-//Select specific yaml file
-    fmt.Println("Reading YAML file.....")
-	
-    var fileName string
-    fileHandle, _:=os.Open(&fileName, "f", "", "YAML file to parse.")
-    if _ != nil {
-        log.Fatal(err)
-    }
-    defer fileHandle.Close()
-
-    if fileName == "" {
-        fmt.Println("Please provide yaml file by using -f option")
-        return
-    }
-
-    scanner := bufio.NewScanner(file)
-    for scanner.Scan() {
-        fmt.Println(scanner.Text())
-    }
-
-    if err := scanner.Err(); err != nil {
-        log.Fatal(err)
-    }
-
-}
-
 func main() {
 //modify yaml file
  yamlNode := yaml.Node{}
@@ -142,4 +114,29 @@ yamlNode.Content[0].Content[appIdx].Content = append(
     }
     fmt.Println(string(out))
 
+	
+	//----------------
+   f, err := os.Open("conf.yaml")
+
+      if err != nil {
+      	  log.Fatal(err)
+      }
+
+
+
+     defer f.Close()
+
+
+     scanner := bufio.NewScanner(f)
+
+    for scanner.Scan() {
+         fmt.Println(scanner.Text())
+
+    }
+
+    if err := scanner.Err(); err != nil {
+          log.Fatal(err)
+    }	
+	
+	
 }
